@@ -1,1 +1,21 @@
 Explain the code execution based on the order of the messages logged in src/quiz/promise-2darray.txt.
+
+The code execution proceeds as follows:
+
+The first call to sum2DArray(array2D) logs "Sum called ..." and "returning from sum" immediately, because the synchronous code inside the Promise constructor is executed before the asynchronous setTimeout function. However, the actual summing occurs inside the setTimeout, so the sum is not calculated or resolved until after a delay.
+
+When the setTimeout executes, each number from the 2D array is logged as it's added to the sum (e.g., "Adding 1 to sum", "Adding 2 to sum", etc.). Once all numbers are added, the sum is resolved, and then() logs "Sum of array2D: 45".
+
+The second call to sum2DArray([]) also logs "Sum called ..." and "returning from sum". However, because the array is empty, the promise is rejected immediately (without waiting for the setTimeout), and catch() logs "Error: Cannot sum an empty array".
+
+The order of the logged messages will be:
+
+"Sum called ..."
+"returning from sum"
+"Sum called ..."
+"returning from sum"
+"Adding 1 to sum"
+"Adding 2 to sum"
+(other addition logs)
+"Sum of array2D: 45"
+"Error: Cannot sum an empty array"
